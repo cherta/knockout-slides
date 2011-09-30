@@ -1,0 +1,10 @@
+Knockout Slides is a set of slides written in spanish to teach and learn knockout.
+
+The slides are a set of html pages and powered by knockout, so is a meta slide, you can learn form the content of the slides and you can also learn from this source code.
+
+I'm not very familiar with knockout but I like it and I did a presentation in moove-it (the place I work) and this is what I came out with.
+I will be glad if some body points a correction to the slides, the code or both.
+
+The app is little sinatra app so I guess you need to install sinatra `gem install sinatra`. I also use sinatra reloader for development so `gem install sinatra-reloader`.
+
+Enjoy ;)
