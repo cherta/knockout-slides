@@ -1,0 +1,23 @@
+.checkout-process tbody tr td:last-child{
+  text-align: right;
+}
+
+.checkout-process tfoot tr td:first-child{
+  text-align: left;
+}
+
+.checkout-process tfoot tr td{
+  text-align: right;
+}
+
+#cart-example .cart, #cart-example .code{
+  float: left;
+}
+
+#cart-example .code{
+  margin-left: 40px;
+}
+
+#cart-example .cart .pricelimit{
+  color: red;
+}

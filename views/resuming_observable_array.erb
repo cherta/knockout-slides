@@ -1,0 +1,58 @@
+<h2>ko.observableArray()</h2>
+<p>Es igual que observable pero para arrays, esta función se encarga de suscribirse a los eventos de push/pop del array y así actualizar la UI.</p>
+<p>Es importante notar que observableArray sólo se fija los objetos que están en el array y no sus propiedades, para observar sus propiedaes hay que hacerlas explícitamente observables también.</p>
+
+<script type="text/html" id="todo">
+  <li data-bind="css: { done: done }"><input type="checkbox" data-bind="checked: done" data-bind="attr: {id: title}"/> <label data-bind="attr: {for: title}">${title}</label></li>
+</script>
+
+<input type="text" data-bind="value: viewModel.todo().title "/> <button data-bind="click: viewModel.addTask">Agregar</button>
+<ul data-bind="template: { name: 'todo', foreach: todos }"></ul>
+
+<h2>Código:</h2>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;input type="text" data-bind="value: viewModel.todo().title "/&gt; &lt;button data-bind="click: viewModel.addTask"&gt;Agregar&lt;/button&gt;
+ &lt;ul data-bind="template: { name: 'todo', foreach: todos }"&gt;&lt;/ul&gt;
+</code></pre>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/javascript"&gt;
+
+  function Todo(title, done){
+   this.title = ko.observable(title);
+   this.done = ko.observable(done);
+  }
+
+  var viewModel = {
+   todos: ko.observableArray([new Todo("Hacer la ppt", false), new Todo("Corregir tildes", true)]),
+   todo: ko.observable(new Todo())
+  };
+
+  viewModel.addTask = function(){
+   viewModel.todos.push(viewModel.todo());
+   viewModel.todo(new Todo());
+  };
+
+  ko.applyBindings(viewModel);
+ &lt;/script&gt;
+</code></pre>
+
+<script type="text/javascript">
+
+  function Todo(title, done){
+    this.title = ko.observable(title);
+    this.done = ko.observable(done);
+  }
+
+  var viewModel = {
+    todos: ko.observableArray([new Todo("Hacer la ppt", false), new Todo("Corregir tildes", true)]),
+    todo: ko.observable(new Todo())
+  };
+
+  viewModel.addTask = function(){
+    viewModel.todos.push(viewModel.todo());
+    viewModel.todo(new Todo());
+  };
+
+  ko.applyBindings(viewModel);
+</script>
+

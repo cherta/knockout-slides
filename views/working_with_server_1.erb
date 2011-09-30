@@ -1,0 +1,74 @@
+<h2>Datos desde el server</h2>
+
+<script type="text/html" id="todo">
+  <li data-bind="css: { done: done }"><input type="checkbox" data-bind="checked: done" data-bind="attr: {id: title}"/> <label data-bind="attr: {for: title}">${title}</label></li>
+</script>
+
+<input type="text" data-bind="value: viewModel.todo().title "/> <button data-bind="click: viewModel.addTask">Agregar</button>
+<ul data-bind="template: { name: 'todo', foreach: todos }"></ul>
+
+<h2>Código</h2>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/html" id="todo"&gt;
+  &lt;li data-bind="css: { done: done }"&gt;&lt;input type="checkbox" data-bind="checked: done" data-bind="attr: {id: title}"/&gt; &lt;label data-bind="attr: {for: title}"&gt;${title}&lt;/label&gt;&lt;/li&gt;
+ &lt;/script&gt;
+</code></pre>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;input type="text" data-bind="value: viewModel.todo().title "/&gt; &lt;button data-bind="click: viewModel.addTask"&gt;Agregar&lt;/button&gt;
+ &lt;ul data-bind="template: { name: 'todo', foreach: todos }"&gt;&lt;/ul&gt;
+</code></pre>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/javascript"&gt;
+
+  function Todo(title, done){
+   this.title = ko.observable(title);
+   this.done = ko.observable(done);
+  }
+
+  var viewModel = {
+   todos: ko.observableArray([new Todo("Hacer la ppt", false), new Todo("Corregir tildes", true)]),
+   todo: ko.observable(new Todo())
+  };
+
+  viewModel.addTask = function(){
+   viewModel.todos.push(viewModel.todo());
+   viewModel.todo(new Todo());
+  };
+
+  $.get('/tasks', function(data){
+   $(data).each(function(index, item){
+    var todo = new Todo(item.title, item.done);
+    viewModel.todos.push(todo);
+   });
+  });
+
+  ko.applyBindings(viewModel);
+ &lt;/script&gt;
+</code></pre>
+
+<script type="text/javascript">
+
+  function Todo(title, done){
+    this.title = ko.observable(title);
+    this.done = ko.observable(done);
+  }
+
+  var viewModel = {
+    todos: ko.observableArray([new Todo("Hacer la ppt", false), new Todo("Corregir tildes", true)]),
+    todo: ko.observable(new Todo())
+  };
+
+  viewModel.addTask = function(){
+    viewModel.todos.push(viewModel.todo());
+    viewModel.todo(new Todo());
+  };
+
+  $.get('/tasks', function(data){
+    $(data).each(function(index, item){
+      var todo = new Todo(item.title, item.done);
+      viewModel.todos.push(todo);
+    });
+  });
+
+  ko.applyBindings(viewModel);
+</script>

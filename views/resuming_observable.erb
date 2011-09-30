@@ -1,0 +1,40 @@
+<h2>ko.observable()</h2>
+<p>Hace referencia a una variable que vamos a bindear a un template. Cada vez que vamos a usar <code>data-bind=""</code> vamos a querer bindear una propiedad observable, de lo contrario no va a actualizarse su valor.</p>
+
+<h2>Leyendo y escribiendo observables</h2>
+<p>Para leer y escribir valores en variables observables hay que usar (). KO crea estos setters y getters cuando decimos que nuestra variable es observable.</p>
+
+<input type="text" data-bind="value: personName" />
+<input type="text" data-bind="value: personAge" />
+
+<span data-bind="text: personName" ></span>
+<span data-bind="text: personAge" ></span>
+
+<h2>Código:</h2>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;input type="text" data-bind="value: personName" /&gt;
+ &lt;input type="text" data-bind="value: personAge" /&gt;
+
+ &lt;span data-bind="text: personName" &gt;&lt;/span&gt;
+ &lt;span data-bind="text: personAge" &gt;&lt;/span&gt;
+</code></pre>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/javascript"&gt;
+  var viewModel = {
+   personName: ko.observable('Bob'),
+   personAge: ko.observable(123)
+  };
+  ko.applyBindings(viewModel);
+ &lt;/script&gt;
+
+</code></pre>
+
+<script type="text/javascript">
+  var viewModel = {
+    personName: ko.observable('Bob'),
+    personAge: ko.observable(123)
+  };
+  ko.applyBindings(viewModel);
+</script>
+
+

@@ -1,0 +1,116 @@
+<script type="text/html" id="products">
+  <tr>
+    <td>${name}</td>
+    <td><input type="text" data-bind="value: quantity"/></td>
+    <td>$<span>${price}</span></td>
+  </tr>
+</script>
+
+<div id="cart-example" class="clearfix">
+  <div class="cart">
+    <h3>Carrito</h3>
+    <table class="checkout-process">
+      <thead>
+      <tr>
+        <td>Nombre Producto</td>
+        <td>Cantidad</td>
+        <td>Precio</td>
+      </tr>
+      </thead>
+      <tbody data-bind="template: { name: 'products', foreach: checkoutModel.products }"></tbody>
+      <tfoot>
+      <tr>
+        <td>Total:</td>
+        <td colspan=”2”>$<span data-bind="text: checkoutModel.total, css: { pricelimit: checkoutModel.total() > 100 }"></span>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="code">
+    <h3>C&oacute;digo</h3>
+    <pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/html" id="products"&gt;
+  &lt;tr&gt;
+   &lt;td&gt;${name}&lt;/td&gt;
+   &lt;td&gt;&lt;input type="text" data-bind="value: quantity"/&gt;&lt;/td&gt;
+   &lt;td&gt;$&lt;span&gt;${price}&lt;/span&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+ &lt;/script&gt;
+
+</code></pre>
+
+    <pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;table class="checkout-process"&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+     &lt;td&gt;Nombre Producto&lt;/td&gt;
+     &lt;td&gt;Cantidad&lt;/td&gt;
+     &lt;td&gt;Precio&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody data-bind="template: { name: 'products', foreach: checkoutModel.products }"&gt;&lt;/tbody&gt;
+    &lt;tfoot&gt;
+    &lt;tr&gt;
+     &lt;td&gt;Total:&lt;/td&gt;
+     &lt;td colspan=”2”&gt;$&lt;span data-bind="text: checkoutModel.total, css: { pricelimit: checkoutModel.total() &gt; 100 }"&gt;&lt;/span&gt;
+     &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tfoot&gt;
+   &lt;/table&gt;
+</code></pre>
+
+    <pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/javascript"&gt;
+  var Line = function(name, unitPrice) {
+   this.name = name;
+   this.unitPrice = unitPrice;
+   this.quantity = ko.observable(1);
+   this.price = ko.dependentObservable(function() {
+    return this.unitPrice * this.quantity();
+   }.bind(this));
+
+  };
+
+  var checkoutModel = {
+   products: ko.observableArray([new Line("Libro Ruby", 10), new Line("Libro IOs", 30)])
+  };
+
+  checkoutModel.total = ko.dependentObservable(function() {
+   var products = checkoutModel.products();
+   var total = 0;
+   for (var i = 0; i &lt; products.length; i++) {
+    total += products[i].price();
+   }
+   return total;
+  });
+
+  ko.applyBindings(checkoutModel);
+ &lt;/script&gt;
+</code></pre>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var Line = function(name, unitPrice) {
+    this.name = name;
+    this.unitPrice = unitPrice;
+    this.quantity = ko.observable(1);
+    this.price = ko.dependentObservable(function() {
+      return this.unitPrice * this.quantity();
+    }.bind(this));
+
+  };
+
+  var checkoutModel = {
+    products: ko.observableArray([new Line("Libro Ruby", 10), new Line("Libro IOs", 30)])
+  };
+
+  checkoutModel.total = ko.dependentObservable(function() {
+    var products = checkoutModel.products();
+    var total = 0;
+    for (var i = 0; i < products.length; i++) {
+      total += products[i].price();
+    }
+    return total;
+  });
+
+  ko.applyBindings(checkoutModel);
+</script>

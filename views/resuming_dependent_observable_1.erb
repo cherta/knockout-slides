@@ -1,0 +1,42 @@
+<h2>ko.dependenObservable()</h2>
+<p>Dependent Observables es la forma que tenemos de crear funciones que se actualizarán cuando algunas de sus dependencias observables lo hace.</p>
+
+<input type="text" data-bind="value: firstName" />
+<input type="text" data-bind="value: lastName" />
+
+<span data-bind="text: fullName" ></span>
+
+<h2>Código:</h2>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;input type="text" data-bind="value: firstName" /&gt;
+ &lt;input type="text" data-bind="value: lastName" /&gt;
+
+ &lt;span data-bind="text: fullName" &gt;&lt;/span&gt;
+</code></pre>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/javascript"&gt;
+  var viewModel = {
+   firstName : ko.observable("Planet"),
+   lastName : ko.observable("Earth")
+  };
+  viewModel.fullName = ko.dependentObservable(function() {
+   return this.firstName() + " " + this.lastName();
+  }, viewModel);
+
+  ko.applyBindings(viewModel);
+ &lt;/script&gt;
+</code></pre>
+
+<script type="text/javascript">
+  var viewModel = {
+    firstName : ko.observable("Planet"),
+    lastName : ko.observable("Earth")
+  };
+  viewModel.fullName = ko.dependentObservable(function() {
+    return this.firstName() + " " + this.lastName();
+  }, viewModel);
+
+  ko.applyBindings(viewModel);
+</script>
+
+

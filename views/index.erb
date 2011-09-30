@@ -1,0 +1,94 @@
+<!-- Templates -->
+<script type="text/html" id="slide">
+	<div id="${id}">
+    <h1>${title}</h1>
+    <div class="content" data-bind="html: html"></div>
+	</div>
+</script>
+
+<script type="text/html" id="slide-chooser">
+	<li>
+    <button data-bind="click: function() { slidesModel.go(this) }">${id}</button>
+	</li>
+</script>
+
+<div id="container">
+  <div data-bind="template: { name: 'slide', foreach: slidesModel.currentSlide }" class="slides-container" id="body"></div>
+
+  <div class="slides-chooser" id="footer">
+    <button data-bind="click: slidesModel.goPreviousSlide, disable: slidesModel.isFirstSlide" class="last">Anterior</button>
+    <ul data-bind="template: { name: 'slide-chooser', foreach: slidesModel.slides}"></ul>
+    <button data-bind="click: slidesModel.goNextSlide, disable: slidesModel.isLastSlide" class="first">Siguiente</button>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+  var slidesModel = {
+    currentSlide: ko.observable(),
+    slides: ko.observableArray(),
+
+    goNextSlide:function(){
+      var slides = this.slides();
+      var slide = null;
+      for(var i=0; i<slides.length;i++ ){
+        slide = slides[i];
+        if(this.currentSlide().id === slide.id && slides[i+1]){
+          this.currentSlide(slides[i+1]);
+          break;
+        }
+      }
+    },
+
+    goPreviousSlide:function(){
+      var slides = this.slides();
+      var slide = null;
+      for(var i=slides.length-1; i>=0;i-- ){
+        slide = slides[i];
+        if(this.currentSlide().id === slide.id && slides[i-1]){
+          this.currentSlide(slides[i-1]);
+          break;
+        }
+      }
+    },
+
+    go:function(slide){
+      this.currentSlide(slide);
+    }
+  };
+
+  ko.dependentObservable(function(){
+    $.get("/slides", function(data){
+      slidesModel.slides(data);
+      slidesModel.currentSlide(data[0]); //Load first slide
+    });
+  });
+
+  slidesModel.isLastSlide = ko.dependentObservable(function(){
+    var slides = slidesModel.slides();
+    if(slidesModel.currentSlide() === undefined) return false;
+    return slidesModel.currentSlide().id == slides[slides.length-1].id;
+  });
+
+  slidesModel.isFirstSlide = ko.dependentObservable(function(){
+    var slides = slidesModel.slides();
+    if(slidesModel.currentSlide() === undefined) return true;
+    return slidesModel.currentSlide().id == slides[0].id;
+  });
+
+
+	ko.applyBindings(slidesModel);
+
+  $(document).keypress(function(event){
+    var code = (event.keyCode ? event.keyCode : event.which);
+    if(code == 39) { //Right Arrow
+      slidesModel.goNextSlide();
+    }else if(code == 37) { //Left Arrow
+      slidesModel.goPreviousSlide();
+    }
+  });
+</script>
+
+

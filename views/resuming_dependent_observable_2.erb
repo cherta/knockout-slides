@@ -1,0 +1,66 @@
+<h2>ko.dependenObservable()</h2>
+<p>También se pueden asignar usando dependentObservables.</p>
+
+Nombre: <span data-bind="text: firstName"></span>
+<br/>
+Apellido: <span data-bind="text: lastName"></span>
+<br/>
+<input data-bind="value: fullName" ></span>
+
+<h2>Código:</h2>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> Nombre: &lt;span data-bind="text: firstName"&gt;&lt;/span&gt;
+ &lt;br/&gt;
+ Apellido: &lt;span data-bind="text: lastName"&gt;&lt;/span&gt;
+ &lt;br/&gt;
+ &lt;input data-bind="value: fullName" &gt;&lt;/span&gt;
+</code></pre>
+
+<pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/javascript"&gt;
+  var viewModel = {
+   firstName : ko.observable("Planet"),
+   lastName : ko.observable("Earth")
+  };
+
+  viewModel.fullName = ko.dependentObservable({
+   read: function () {
+    return this.firstName() + " " + this.lastName();
+   },
+   write: function (value) {
+    var lastSpacePos = value.lastIndexOf(" ");
+    if (lastSpacePos &gt; 0) { // Ignore values with no space character
+     this.firstName(value.substring(0, lastSpacePos)); // Update "firstName"
+     this.lastName(value.substring(lastSpacePos + 1)); // Update "lastName"
+    }
+   },
+   owner: viewModel
+ });
+
+  ko.applyBindings(viewModel);
+ &lt;/script&gt;
+</code></pre>
+
+<script type="text/javascript">
+  var viewModel = {
+    firstName : ko.observable("Planet"),
+    lastName : ko.observable("Earth")
+  };
+
+  viewModel.fullName = ko.dependentObservable({
+    read: function () {
+      return this.firstName() + " " + this.lastName();
+    },
+    write: function (value) {
+      var lastSpacePos = value.lastIndexOf(" ");
+      if (lastSpacePos > 0) { // Ignore values with no space character
+        this.firstName(value.substring(0, lastSpacePos)); // Update "firstName"
+        this.lastName(value.substring(lastSpacePos + 1)); // Update "lastName"
+      }
+    },
+    owner: viewModel
+});
+
+  ko.applyBindings(viewModel);
+</script>
+
+

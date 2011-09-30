@@ -1,0 +1,103 @@
+<ul>
+  <li>Atamos el c&oacute;digo al DOM</li>
+  <li>No definimos claramente el problema</li>
+  <li>Nuestra soluci&oacute;n no es extensible</li>
+</ul>
+
+<div id="cart-example" class="clearfix">
+  <div class="cart">
+    <h3>Carrito</h3>
+    <table class="checkout-process">
+      <thead>
+      <tr>
+        <td>Nombre Producto</td>
+        <td>Cantidad</td>
+        <td>Precio</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr unit-price="10">
+        <td>Libro Ruby</td>
+        <td>
+          <select class="quantity-selector">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </td>
+        <td>$<span></span></td>
+      </tr>
+      <tr unit-price="30">
+        <td>Libro IOs</td>
+        <td>
+          <select class="quantity-selector">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </td>
+        <td>$<span></span></td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>Total:</td>
+        <td colspan=”2”>$<span></span></td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="code">
+    <h3>C&oacute;digo</h3>
+    <pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/javascript"&gt;
+  $(document).ready(function() {
+   $(".quantity-selector").change(function(event) {
+    var unitPrice = $(this).parent().parent().attr("unit-price");
+    $(this).parent().next().find("span").text(parseInt(unitPrice) * parseInt($(this).val()));
+    $(".checkout-process").trigger("calculate-total");
+   });
+
+   $(".checkout-process").bind("calculate-total", function(event) {
+    var total = 0;
+    $(this).find("tbody tr td:last-child span").each(function(index, item) {
+     total += parseInt($(item).text());
+    });
+    $(this).find("tfoot tr td:last-child span").text(total);
+    if(total &gt; 100){
+     $(this).find("tfoot tr td:last-child span").addClass("pricelimit");
+    }else{
+     $(this).find("tfoot tr td:last-child span").removeClass("pricelimit");
+    }
+   });
+
+   $(".quantity-selector").change();
+  });
+ &lt;/script&gt;
+</code></pre>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".quantity-selector").change(function(event) {
+      var unitPrice = $(this).parent().parent().attr("unit-price");
+      $(this).parent().next().find("span").text(parseInt(unitPrice) * parseInt($(this).val()));
+      $(".checkout-process").trigger("calculate-total");
+    });
+
+    $(".checkout-process").bind("calculate-total", function(event) {
+      var total = 0;
+      $(this).find("tbody tr td:last-child span").each(function(index, item) {
+        total += parseInt($(item).text());
+      });
+      $(this).find("tfoot tr td:last-child span").text(total);
+      if(total > 100){
+        $(this).find("tfoot tr td:last-child span").addClass("pricelimit");
+      }else{
+        $(this).find("tfoot tr td:last-child span").removeClass("pricelimit");
+      }
+    });
+
+    $(".quantity-selector").change();
+  });
+</script>
