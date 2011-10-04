@@ -23,13 +23,13 @@ get '/slides' do
   presentations << {:id =>'2', :title =>  'Qu&eacute; es Knockout', :html  =>  file_content('what_is_2.erb')}
   presentations << {:id =>'3', :title =>  'Plain Old jQuery Way', :html  =>  file_content('checkout_cart_jquery.erb')}
   presentations << {:id =>'4', :title =>  'Plain Old jQuery Way (Problems)', :html  =>  file_content('checkout_cart_jquery_failures.erb')}
-  presentations << {:id =>'5', :title =>  'New Fancy Knockout Way', :html  =>  '<iframe src="/checkout_cart_knockout" style="height: 1220px;"></iframe>'}
-  presentations << {:id =>'6', :title =>  'Pasando en Limpio (Observable)', :html  => '<iframe src="/resuming_observable" style="height: 800px;"></iframe>'}
-  presentations << {:id =>'7', :title =>  'Pasando en Limpio (Dependent Observable I)', :html  =>  '<iframe src="/resuming_dependent_observable_1" style="height: 660px;"></iframe>'}
-  presentations << {:id =>'8', :title =>  'Pasando en Limpio (Dependent Observable II)', :html  =>  '<iframe src="/resuming_dependent_observable_2" style="height: 980px;"></iframe>'}
-  presentations << {:id =>'9', :title =>  'Pasando en Limpio (Observable Array)', :html  =>  '<iframe src="/resuming_observable_array" style="height: 970px;"></iframe>'}
-  presentations << {:id =>'10', :title =>  'Trabajando con el Servidor', :html  =>  '<iframe src="/working_with_server_1" style="height: 1100px;"></iframe>'}
-  presentations << {:id =>'11', :title =>  'Trabajando con el Servidor', :html  =>  '<iframe src="/working_with_server_2" style="height: 1330px;"></iframe>'}
+  presentations << {:id =>'5', :title =>  'New Fancy Knockout Way', :html  =>  file_content('checkout_cart_knockout.erb')}
+  presentations << {:id =>'6', :title =>  'Pasando en Limpio (Observable)', :html  => file_content('resuming_observable.erb')}
+  presentations << {:id =>'7', :title =>  'Pasando en Limpio (Dependent Observable I)', :html  =>  file_content('resuming_observable_array.erb')}
+  presentations << {:id =>'8', :title =>  'Pasando en Limpio (Dependent Observable II)', :html  =>  file_content('resuming_dependent_observable_1.erb')}
+  presentations << {:id =>'9', :title =>  'Pasando en Limpio (Observable Array)', :html  =>  file_content('resuming_dependent_observable_2.erb')}
+  presentations << {:id =>'10', :title =>  'Trabajando con el Servidor', :html  =>  file_content('working_with_server_1.erb')}
+  presentations << {:id =>'11', :title =>  'Trabajando con el Servidor', :html  =>  file_content('working_with_server_2.erb')}
 
   presentations.to_json
 end

@@ -1,13 +1,15 @@
-<h2>ko.dependenObservable()</h2>
-<p>También se pueden asignar usando dependentObservables.</p>
+<div id="dependent-2-example">
+  <h2>ko.dependenObservable()</h2>
+  <p>Tambi&eacute;n se pueden asignar usando dependentObservables.</p>
 
-Nombre: <span data-bind="text: firstName"></span>
-<br/>
-Apellido: <span data-bind="text: lastName"></span>
-<br/>
-<input data-bind="value: fullName" ></span>
+  Nombre: <span data-bind-dependent-2="text: firstName"></span>
+  <br/>
+  Apellido: <span data-bind-dependent-2="text: lastName"></span>
+  <br/>
+  <input data-bind-dependent-2="value: fullName" ></span>
+</div>
 
-<h2>Código:</h2>
+<h2>C&oacute;digo:</h2>
 
 <pre class="CICodeFormatter" ><code class="CICodeFormatter"> Nombre: &lt;span data-bind="text: firstName"&gt;&lt;/span&gt;
  &lt;br/&gt;
@@ -60,7 +62,7 @@ Apellido: <span data-bind="text: lastName"></span>
     owner: viewModel
 });
 
-  ko.applyBindings(viewModel);
+  slidesModel.bindWhenReady("dependent-2-example", viewModel, "dependent-2");
 </script>
 
 

@@ -1,7 +1,7 @@
 <script type="text/html" id="products">
   <tr>
     <td>${name}</td>
-    <td><input type="text" data-bind="value: quantity"/></td>
+    <td><input type="text" data-bind-checkout="value: quantity"/></td>
     <td>$<span>${price}</span></td>
   </tr>
 </script>
@@ -17,11 +17,11 @@
         <td>Precio</td>
       </tr>
       </thead>
-      <tbody data-bind="template: { name: 'products', foreach: checkoutModel.products }"></tbody>
+      <tbody data-bind-checkout="template: { name: 'products', foreach: checkoutModel.products }"></tbody>
       <tfoot>
       <tr>
         <td>Total:</td>
-        <td colspan=”2”>$<span data-bind="text: checkoutModel.total, css: { pricelimit: checkoutModel.total() > 100 }"></span>
+        <td colspan=”2”>$<span data-bind-checkout="text: checkoutModel.total(), css: { pricelimit: checkoutModel.total() > 100 }"></span>
         </td>
       </tr>
       </tfoot>
@@ -112,5 +112,5 @@
     return total;
   });
 
-  ko.applyBindings(checkoutModel);
+  slidesModel.bindWhenReady("cart-example", checkoutModel, 'checkout');
 </script>

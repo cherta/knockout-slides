@@ -4,13 +4,16 @@
 <h2>Leyendo y escribiendo observables</h2>
 <p>Para leer y escribir valores en variables observables hay que usar (). KO crea estos setters y getters cuando decimos que nuestra variable es observable.</p>
 
-<input type="text" data-bind="value: personName" />
-<input type="text" data-bind="value: personAge" />
+<div id="observable-example">
+  <input type="text" data-bind-observable="value: personName" />
+  <input type="text" data-bind-observable="value: personAge" />
 
-<span data-bind="text: personName" ></span>
-<span data-bind="text: personAge" ></span>
+  <span data-bind-observable="text: personName" ></span>
+  <span data-bind-observable="text: personAge" ></span>
+</div>
 
-<h2>Código:</h2>
+
+<h2>C&oacute;digo:</h2>
 
 <pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;input type="text" data-bind="value: personName" /&gt;
  &lt;input type="text" data-bind="value: personAge" /&gt;
@@ -34,7 +37,8 @@
     personName: ko.observable('Bob'),
     personAge: ko.observable(123)
   };
-  ko.applyBindings(viewModel);
+
+  slidesModel.bindWhenReady("observable-example", viewModel, 'observable');
 </script>
 
 

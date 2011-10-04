@@ -1,12 +1,15 @@
-<h2>ko.dependenObservable()</h2>
-<p>Dependent Observables es la forma que tenemos de crear funciones que se actualizarán cuando algunas de sus dependencias observables lo hace.</p>
+<div id="dependent-1-example">
+  <h2>ko.dependenObservable()</h2>
+  <p>Dependent Observables es la forma que tenemos de crear funciones que se actualizar&aacute;n cuando algunas de sus dependencias observables lo hace.</p>
 
-<input type="text" data-bind="value: firstName" />
-<input type="text" data-bind="value: lastName" />
+  <input type="text" data-bind-dependent-1="value: firstName" />
+  <input type="text" data-bind-dependent-1="value: lastName" />
 
-<span data-bind="text: fullName" ></span>
+  <span data-bind-dependent-1="text: fullName" ></span>
+</div>
 
-<h2>Código:</h2>
+
+<h2>C&oacute;digo:</h2>
 
 <pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;input type="text" data-bind="value: firstName" /&gt;
  &lt;input type="text" data-bind="value: lastName" /&gt;
@@ -36,7 +39,7 @@
     return this.firstName() + " " + this.lastName();
   }, viewModel);
 
-  ko.applyBindings(viewModel);
+  slidesModel.bindWhenReady("dependent-1-example", viewModel, "dependent-1");
 </script>
 
 

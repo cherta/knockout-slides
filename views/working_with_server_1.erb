@@ -1,13 +1,16 @@
-<h2>Datos desde el server</h2>
+<div id="server-1-example">
+  <h2>Datos desde el server</h2>
 
-<script type="text/html" id="todo">
-  <li data-bind="css: { done: done }"><input type="checkbox" data-bind="checked: done" data-bind="attr: {id: title}"/> <label data-bind="attr: {for: title}">${title}</label></li>
-</script>
+  <script type="text/html" id="todo">
+    <li data-bind-server-1="css: { done: done }"><input type="checkbox" data-bind-server-1="checked: done, attr: { id: title }"/> <label data-bind-server-1="attr: {for: title}">${title}</label></li>
+  </script>
 
-<input type="text" data-bind="value: viewModel.todo().title "/> <button data-bind="click: viewModel.addTask">Agregar</button>
-<ul data-bind="template: { name: 'todo', foreach: todos }"></ul>
+  <input type="text" data-bind-server-1="value: viewModel.todo().title "/> <button data-bind-server-1="click: viewModel.addTask">Agregar</button>
+  <ul data-bind-server-1="template: { name: 'todo', foreach: todos }"></ul>
+</div>
 
-<h2>Código</h2>
+
+<h2>C&oacute;digo</h2>
 
 <pre class="CICodeFormatter" ><code class="CICodeFormatter"> &lt;script type="text/html" id="todo"&gt;
   &lt;li data-bind="css: { done: done }"&gt;&lt;input type="checkbox" data-bind="checked: done" data-bind="attr: {id: title}"/&gt; &lt;label data-bind="attr: {for: title}"&gt;${title}&lt;/label&gt;&lt;/li&gt;
@@ -70,5 +73,5 @@
     });
   });
 
-  ko.applyBindings(viewModel);
+  slidesModel.bindWhenReady("server-1-example", viewModel, "server-1");
 </script>

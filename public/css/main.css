@@ -29,6 +29,7 @@ html,body {
 #container {
   min-height:100%;
   position:relative;
+  padding-bottom: 50px;
 }
 
 #body {
@@ -104,6 +105,27 @@ body{
 
 .done{
   text-decoration: line-through;
+}
+
+.checkout-process tbody tr td:last-child{
+  text-align: right;
+}
+
+.checkout-process tfoot tr td:first-child{
+  text-align: left;
+}
+
+.checkout-process tfoot tr td{
+  text-align: right;
+}
+
+#cart-example .cart, #cart-example .code{
+  float: left;
+  width: 50%;
+}
+
+#cart-example .cart .pricelimit{
+  color: red;
 }
 
 pre.CICodeFormatter{

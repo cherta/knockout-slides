@@ -26,9 +26,16 @@
 
 <script type="text/javascript">
 
+  var Slide = function(id, title, html){
+    this.id = id;
+    this.title = title;
+    this.html = html;
+  };
+
   var slidesModel = {
     currentSlide: ko.observable(),
     slides: ko.observableArray(),
+    currentExample: ko.observable(),
 
     goNextSlide:function(){
       var slides = this.slides();
@@ -56,14 +63,45 @@
 
     go:function(slide){
       this.currentSlide(slide);
+    },
+
+    //Simple hack to know when the DOM node is ready
+    //Knockout only fires an event when the observable changes (before DOM gets refreshed),
+    //and it doesn't provide any event when the DOM changes.
+
+    //I need to attach new bindings to existing nodes, thus I need to bindWhenReady
+    intervalId: null,
+    node: null,
+    model: null,
+    namespace: null,
+
+    bindWhenReady: function(node, model, namespace){
+      this.node = node;
+      this.model = model;
+      this.namespace = namespace;
+      this.intervalId = setInterval("slidesModel.checkNode()",100);
+    },
+
+    checkNode:function(){
+      if ($("#" + this.node).size() > 0){ //Check if the node is present, if not do nothing, setInterval will call us again
+        clearInterval(this.intervalId); //stop looping
+
+        ko.applyBindings(this.model, this.namespace);
+
+        //Clear the values for next slide
+        this.intervalId = null;
+        this.node = null;
+        this.model = null;
+        this.namespace = null;
+      }
     }
   };
 
-  ko.dependentObservable(function(){
-    $.get("/slides", function(data){
-      slidesModel.slides(data);
-      slidesModel.currentSlide(data[0]); //Load first slide
+  $.get("/slides", function(data){
+    $(data).each(function(index, item){
+      slidesModel.slides.push(new Slide(item.id, item.title, item.html));
     });
+    slidesModel.currentSlide(data[0]); //Load first slide
   });
 
   slidesModel.isLastSlide = ko.dependentObservable(function(){
@@ -78,6 +116,9 @@
     return slidesModel.currentSlide().id == slides[0].id;
   });
 
+  $(document).bind('new-content-loaded',function(){
+    console.log('new-content-loaded');
+  });
 
 	ko.applyBindings(slidesModel);
 
@@ -89,6 +130,10 @@
       slidesModel.goPreviousSlide();
     }
   });
+
+
+
+
 </script>
 
 
